@@ -3,7 +3,7 @@ version: '3'
 services:
   db:
     image: mysql:8.0
-    container_name: db
+    container_name: db-wordpress
     restart: unless-stopped
     env_file: .env
     environment:
@@ -51,7 +51,7 @@ services:
     depends_on:
       - webserver
     image: certbot/certbot
-    container_name: certbot
+    container_name: certbot-ssl
     volumes:
       - certbot-etc:/etc/letsencrypt
       - wordpress:/var/www/html
