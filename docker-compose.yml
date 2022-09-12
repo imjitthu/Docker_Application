@@ -48,6 +48,7 @@ services:
       - app-network
 
 volumes:
+  certbot-etc:
   wordpress:
   dbdata:
 
