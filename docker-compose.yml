@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db:
+  mysql:
     image: mysql
     container_name: mysql
     restart: unless-stopped
@@ -31,7 +31,7 @@ services:
     networks:
       - app-network
 
-  webserver:
+  nginx:
     depends_on:
       - wordpress
     image: nginx:1.15.12-alpine
