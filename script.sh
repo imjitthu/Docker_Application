@@ -40,3 +40,8 @@ curl -sSLo nginx-conf/options-ssl-nginx.conf https://raw.githubusercontent.com/c
 #  * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
 #  * Donating to EFF:                    https://eff.org/donate-le
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+crontab -e
+Add the following line:
+
+* */12 * * * root /usr/bin/certbot renew >/dev/null 2>&1
