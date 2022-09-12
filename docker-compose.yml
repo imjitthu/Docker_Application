@@ -43,19 +43,9 @@ services:
     volumes:
       - wordpress:/var/www/html
       - ./nginx-conf:/etc/nginx/conf.d
-      - certbot-etc:/etc/letsencrypt
+      - /etc/letsencrypt:/etc/letsencrypt
     networks:
       - app-network
-
-  certbot:
-    depends_on:
-      - webserver
-    image: certbot/certbot
-    container_name: certbot-ssl
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - wordpress:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email contact@techlurn.org --agree-tos --no-eff-email --staging -d www.techlurn.org -d techlurn.org
 
 volumes:
   certbot-etc:
