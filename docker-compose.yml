@@ -43,7 +43,7 @@ services:
     volumes:
       - wordpress:/var/www/html
       - ./nginx-conf:/etc/nginx/conf.d
-      - certbot-etc:/etc/letsencrypt
+      - /etc/letsencrypt:/etc/letsencrypt
     networks:
       - app-network
 
