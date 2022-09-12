@@ -16,7 +16,7 @@ services:
 
   wordpress:
     depends_on: 
-      - mysql
+      - db
     image: wordpress:5.1.1-fpm-alpine
     container_name: wordpress
     restart: unless-stopped
