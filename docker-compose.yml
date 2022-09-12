@@ -51,7 +51,6 @@ services:
 
 
 volumes:
-  certbot-etc:
   wordpress:
   dbdata:
 
