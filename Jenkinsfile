@@ -9,6 +9,7 @@ pipeline {
         sh 'script.sh'
         sh 'docker rm -f ${docker ps -aq}'
         sh 'docker-compose up -d'
+        sh 'docker-compose ps'
       }
     }
   }
