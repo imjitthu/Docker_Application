@@ -21,7 +21,7 @@ yum install haproxy -y
 
 nano ssl_renew.sh
 
-
+curl -sSLo nginx-conf/options-ssl-nginx.conf https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf
 
 certbot certonly --webroot --webroot-path=/var/www/html --email contact@techlurn.org --agree-tos --no-eff-email --staging -d techlurn.org -d www.techlurn.org
 
