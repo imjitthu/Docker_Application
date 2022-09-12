@@ -2,6 +2,7 @@
 
 echo "installing Required"
 sudo yum update -y
+sudo yum upgrade -y
 sudo yum install certbot -y
 
 # COMPOSE="/usr/local/bin/docker-compose --no-ansi"
