@@ -28,6 +28,6 @@ services:
       - WORDPRESS_DB_HOST=db
       - WORDPRESS_DB_USER=techlurno
       - WORDPRESS_DB_PASSWORD=Darl!ng#123
-      - WORDPRESS_DB_NAME=Darl!ng#123
+      - WORDPRESS_DB_NAME=techlurno
 volumes:
   db_data:
