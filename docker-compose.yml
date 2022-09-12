@@ -8,11 +8,8 @@ services:
     env_file: .env
     environment:
       - MYSQL_DATABASE=wordpress
-    volumes: 
-      - type: bind
-        source: /tmp/mysql_wp
-        target: /var/lib/mysql
-      # - dbdata:/var/lib/mysql
+    volumes:
+      - dbdata:/var/lib/mysql
     command: '--default-authentication-plugin=mysql_native_password'
     networks:
       - app-network
@@ -30,10 +27,7 @@ services:
       - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
       - WORDPRESS_DB_NAME=wordpress
     volumes:
-      - type: bind
-        source: /tmp/wordpress
-        target: wordpress:/var/www/html
-      # - wordpress:/var/www/html
+      - wordpress:/var/www/html
     networks:
       - app-network
 
