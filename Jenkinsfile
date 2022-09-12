@@ -2,17 +2,11 @@ pipeline {
 
   agent any
 
-  options {
-    copyArtifactPermission 'test-pipeline'
-    durabilityHint 'MAX_SURVIVABILITY'
-  }
   stages {
 
-    stage('frontend') {
+    stage('Deploy WordPress') {
       steps {
-        powershell 'dir'
-        archiveArtifacts artifacts: '*.*', followSymlinks: false, onlyIfSuccessful: true
-        powershell 'dir'
+        sh 'docker-compose up -d'
       }
     }
   }
