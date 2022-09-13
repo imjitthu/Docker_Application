@@ -19,7 +19,8 @@ services:
   discourse:
     image: docker.io/bitnami/discourse:2
     ports:
-      - '81:3000'
+      - 8081:8081
+      - 8443:8443
     volumes:
       - 'discourse_data:/bitnami/discourse'
     depends_on:
