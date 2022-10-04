@@ -1,67 +1,66 @@
 version: '3'
+
 services:
-  postgresql:
-    image: docker.io/bitnami/postgresql:11
-    volumes:
-      - 'postgresql_data:/bitnami/postgresql'
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: unless-stopped
+    env_file: .env
     environment:
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=yes
-      - POSTGRESQL_USERNAME=bn_discourse
-      - POSTGRESQL_DATABASE=bitnami_discourse
-  redis:
-    image: docker.io/bitnami/redis:7.0
+      - MYSQL_DATABASE=wordpress
+    volumes: 
+      - dbdata:/var/lib/mysql
+    command: '--default-authentication-plugin=mysql_native_password'
+    networks:
+      - app-network
+
+  wordpress:
+    depends_on: 
+      - db
+    image: wordpress:5.1.1-fpm-alpine
+    container_name: wordpress
+    restart: unless-stopped
+    env_file: .env
     environment:
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=yes
+      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_USER=$MYSQL_USER
+      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+      - WORDPRESS_DB_NAME=wordpress
     volumes:
-      - 'redis_data:/bitnami/redis'
-  discourse:
-    image: docker.io/bitnami/discourse:2
+      - wordpress:/var/www/html
+    networks:
+      - app-network
+
+  webserver:
+    depends_on:
+      - wordpress
+    image: nginx:1.15.12-alpine
+    container_name: webserver
+    restart: unless-stopped
     ports:
-      - 8081:8081
-      - 8443:8443
+      - "80:80"
     volumes:
-      - 'discourse_data:/bitnami/discourse'
+      - wordpress:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+    networks:
+      - app-network
+
+  certbot:
     depends_on:
-      - postgresql
-      - redis
-    environment:
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=yes
-      - DISCOURSE_HOST=www.example.com
-      - DISCOURSE_DATABASE_HOST=postgresql
-      - DISCOURSE_DATABASE_PORT_NUMBER=5432
-      - DISCOURSE_DATABASE_USER=bn_discourse
-      - DISCOURSE_DATABASE_NAME=bitnami_discourse
-      - DISCOURSE_REDIS_HOST=redis
-      - DISCOURSE_REDIS_PORT_NUMBER=6379
-      - POSTGRESQL_CLIENT_POSTGRES_USER=postgres
-      - POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=bitnami_discourse
-      - POSTGRESQL_CLIENT_CREATE_DATABASE_EXTENSIONS=hstore,pg_trgm
-  sidekiq:
-    image: docker.io/bitnami/discourse:2
-    depends_on:
-      - discourse
+      - webserver
+    image: certbot/certbot
+    container_name: certbot
     volumes:
-      - 'sidekiq_data:/bitnami/discourse'
-    command: /opt/bitnami/scripts/discourse-sidekiq/run.sh
-    environment:
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=yes
-      - DISCOURSE_HOST=www.example.com
-      - DISCOURSE_DATABASE_HOST=postgresql
-      - DISCOURSE_DATABASE_PORT_NUMBER=5432
-      - DISCOURSE_DATABASE_USER=bn_discourse
-      - DISCOURSE_DATABASE_NAME=bitnami_discourse
-      - DISCOURSE_REDIS_HOST=redis
-      - DISCOURSE_REDIS_PORT_NUMBER=6379
+      - certbot-etc:/etc/letsencrypt
+      - wordpress:/var/www/html
+    command: certonly --webroot --webroot-path=/var/www/html --email contact@techlurn.org --agree-tos --no-eff-email --staging -d techlurn.org -d www.techlurn.org
+
 volumes:
-  postgresql_data:
-    driver: local
-  redis_data:
-    driver: local
-  discourse_data:
-    driver: local
-  sidekiq_data:
-    driver: local
+  certbot-etc:
+  wordpress:
+  dbdata:
+
+networks:
+  app-network:
+    driver: bridge
