@@ -11,10 +11,10 @@ services:
     volumes: 
       - dbdata:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
-      - MYSQL_DATABASE=$MYSQL_DB
+      - MYSQL_ROOT_PASSWORD=somewordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
     command: '--default-authentication-plugin=mysql_native_password'
     networks:
       - app-network
@@ -27,10 +27,10 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      - WORDPRESS_DB_HOST=$MYSQL_HOST
-      - WORDPRESS_DB_USER=$MYSQL_USER
-      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
-      - WORDPRESS_DB_NAME=$MYSQL_DB
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
     volumes:
       - wordpress:/var/www/html
     networks:
