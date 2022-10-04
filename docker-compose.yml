@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  db:
+  database:
     image: mysql
-    container_name: db
+    container_name: database
     restart: unless-stopped
     env_file: .env
     # environment:
@@ -21,13 +21,13 @@ services:
 
   wordpress:
     depends_on: 
-      - db
+      - database
     image: wordpress
     container_name: wordpress
     restart: unless-stopped
     env_file: .env
     environment:
-      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_HOST=database
       - WORDPRESS_DB_USER=wordpress
       - WORDPRESS_DB_PASSWORD=wordpress
       - WORDPRESS_DB_NAME=wordpress
