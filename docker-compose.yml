@@ -74,7 +74,7 @@ volumes:
   certbot-etc:
   wordpress:
   dbdata:
-  nexus-data: {}
+  nexus-data:
 
 networks:
   app-network:
