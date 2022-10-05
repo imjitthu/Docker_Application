@@ -63,7 +63,7 @@ services:
     command: certonly --webroot --webroot-path=/var/www/html --email contact@techlurn.org --agree-tos --no-eff-email --force-renewal -d techlurn.org -d www.techlurn.org
 
   nexus:
-    image: sonatype/nexus
+    image: sonatype/nexus3
     volumes:
       - "./nexus:/nexus-data"
     ports:
