@@ -17,3 +17,12 @@ Caution: Running sudo chmod 777 /var/run/docker.sock will solve your problem but
 Permanent Solution:
 
 Add the current user to the docker group: sudo usermod -a -G docker $USER
+
+docker system prune
+WARNING! This will remove:
+  - all stopped containers
+  - all networks not used by at least one container
+  - all dangling images
+  - all dangling build cache
+
+docker system prune --volumes
