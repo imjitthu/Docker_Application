@@ -63,8 +63,8 @@ services:
     command: certonly --webroot --webroot-path=/var/www/html --email contact@techlurn.org --agree-tos --no-eff-email --force-renewal -d techlurn.org -d www.techlurn.org
 
   nexus:
-    # image: sonatype/docker-nexus3
-    image: sonatype/nexus3
+    image: sonatype/docker-nexus3
+    # image: sonatype/nexus3 #8GB physical memory required
     container_name: nexus
     volumes:
       - "nexus-data:/sonatype-work"

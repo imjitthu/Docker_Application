@@ -26,3 +26,4 @@ WARNING! This will remove:
   - all dangling build cache
 
 docker system prune --volumes
+docker image prune -a
