@@ -6,7 +6,8 @@ pipeline {
 
     stage('Deploy WordPress') {
       steps {
-        // sh 'id; sudo chmod +x launcher; ./launcher bootstrap app'
+        sh 'id; sudo chmod/'
+        //  +x launcher; ./launcher bootstrap app'
         sh 'docker-compose up -d'
         // sh 'docker-compose ps';
       }
