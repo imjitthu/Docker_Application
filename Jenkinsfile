@@ -8,7 +8,7 @@ pipeline {
       steps {
         sh 'id'
         // sh 'sudo chmod +x ./launcher; ./launcher bootstrap app'
-        sh 'docker-compose down'
+        // sh 'docker-compose down'
         sh 'docker-compose up -d'
         // sh 'docker-compose ps';
       }

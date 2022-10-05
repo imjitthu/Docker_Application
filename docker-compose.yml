@@ -62,10 +62,18 @@ services:
       - wordpress:/var/www/html
     command: certonly --webroot --webroot-path=/var/www/html --email contact@techlurn.org --agree-tos --no-eff-email --force-renewal -d techlurn.org -d www.techlurn.org
 
+  nexus:
+    image: sonatype/nexus
+    volumes:
+      - "nexus-data:/sonatype-work"
+    ports:
+      - "8081:8081"
+  
 volumes:
   certbot-etc:
   wordpress:
   dbdata:
+  nexus-data: {}
 
 networks:
   app-network:
