@@ -14,7 +14,8 @@ pipeline {
         // sh 'docker-compose up -d'
         // sh 'docker-compose ps';
       }
-      stage('Deploy Nexus Repository') {
+    }
+    stage('Deploy Nexus Repository') {
       steps {
         echo "installing Nexus Repository"
         // sh 'docker-compose down'
@@ -24,4 +25,5 @@ pipeline {
       }
     }
   }
+}
 }
